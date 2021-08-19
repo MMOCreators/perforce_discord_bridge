@@ -1,0 +1,14 @@
+version: "3.8"
+services: 
+  p4watcher:
+    build: ./
+    environment:
+      - DISCORD_URL=https://discord.com/api/webhooks/12341234/hash
+      - P4_USER=user
+      - P4_PASSWD=password
+      - P4_PORT=ssl:1.1.1.1:1666
+      - SAVE_FILE=./P4data.json
+      - CRON_TIME=00 */1 * * * *
+      - CRON_TIMEZONE=America/Los_Angeles
+      - DISCORD_FOOTER=Example Perforce Discord Webhook
+

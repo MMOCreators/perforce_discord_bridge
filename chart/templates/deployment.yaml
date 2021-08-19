@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "perforce_discord_bridge.fullname" . }}
+  labels:
+    {{- include "perforce_discord_bridge.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "perforce_discord_bridge.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "perforce_discord_bridge.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: DISCORD_URL
+            value: {{ .Values.secrets.DISCORD_URL }}
+          - name: P4_USER
+            value: {{ .Values.secrets.P4_USER }}
+          - name: P4_PASSWD
+            value: {{ .Values.secrets.P4_PASSWD }}
+          - name: P4_PORT
+            value: {{ .Values.secrets.P4_PORT }}
+          - name: SAVE_FILE
+            value: {{ .Values.secrets.SAVE_FILE }}
+          - name: CRON_TIME
+            value: {{ .Values.secrets.CRON_TIME }}
+          - name: CRON_TIMEZONE
+            value: {{ .Values.secrets.CRON_TIMEZONE }}
+          - name: DISCORD_FOOTER
+            value: {{ .Values.secrets.DISCORD_FOOTER }}

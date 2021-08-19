@@ -1,0 +1,25 @@
+# Default values for perforce_discord_bridge.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+secrets:
+  DISCORD_URL: ""
+  P4_USER: ""
+  P4_PASSWD: ""
+  P4_PORT: ""
+  SAVE_FILE: ""
+  CRON_TIME: ""
+  CRON_TIMEZONE: ""
+  DISCORD_FOOTER: ""
+
+podAnnotations: {}
